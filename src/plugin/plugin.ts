@@ -191,8 +191,13 @@ export const plugin = createUnplugin<Options_, false>((options_, meta) => {
           )
           return
         }
-      } else {
+      } else if (outputOpts.type === 'raw') {
         data = messages
+      } else {
+        this.error(
+          new TransformError(`Unsupported output type: ${outputOpts.type}`),
+        )
+        return
       }
 
       if (outputOpts.format === 'module') {
